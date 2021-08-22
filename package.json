@@ -2,9 +2,9 @@
   "name": "caps",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "caps.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage --verbose "
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sultan-elayan/caps#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "faker": "^5.5.3"
+    "faker": "^5.5.3",
+    "jest": "^27.0.6"
   }
 }
