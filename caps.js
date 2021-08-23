@@ -1,27 +1,107 @@
 'use strict';
-// require('dotenv').config();
-const events = require('./events');
-let faker = require('faker');
 
-require('./vendor');
-require('./driver');
+require('dotenv').config()
+const port = process.env.PORT || 8000;
+const io = require('socket.io')(port);
+const caps = io.of('/caps');
 
-function packageOrder() {
-    let payload = {
-        store: faker.company.companyName(),
-        orderID: faker.datatype.uuid(),
-        customer: faker.name.findName(),
-        address: faker.address.streetAddress()
-    }
 
-    events.emit('pickup', payload)
+console.log("test ==============================");
+
+io.on('connection', (socket) => {
+    console.log('CONNECTED general with id : ', socket.id);
+   
+})
+
+caps.on('connection', (socket) => {
+
+    console.log('CONNECTED to caps with id : ', socket.id);
     
-    /*  using setInterval can cause a memory leak. By using setTimeout you 
-    ensure that the next function call won't get triggered until the previous 
-    function call has finished.*/
-    setTimeout(packageOrder, 5000);
-}
+   
+    socket.on('pickup', (payload => {
 
-packageOrder();
+        let packageStatus = {
+            event: "pickup",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+        socket.on ("pickup", (payload=>{
 
-module.exports = packageOrder
+        }))
+        
+    }))
+
+    socket.on('in-transit', (payload => {
+
+        let packageStatus = {
+            event: "in-transit",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+    }))
+
+
+    socket.on('delivered', (payload=>{
+
+        let packageStatus = {
+            event: "delivered",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+        console.log("====================== NEW ORDER ==============================")
+    })) 
+
+})
+
+module.exports=caps
+
+// ++++++++++++++++++  TCP ++++++++++++++++++++++++
+
+
+
+
+// 'use strict';
+
+// const events = require('./events');
+// require('./driver');
+// require('./vendor');
+
+// console.log("=== First Order ===")
+// events.on('pickup', (payload=>{
+
+//     let packageStatus = {
+//         event: "pickup",
+//         time: new Date().toISOString(),
+//         payload
+//     }
+//     console.log("EVENT", packageStatus)
+// })) 
+// // ====================================================
+
+// events.on('in-transit', (payload=>{
+
+//     let packageStatus = {
+//         event: "in-transit",
+//         time: new Date().toISOString(),
+//         payload
+//     }
+//     console.log("EVENT", packageStatus)
+// })) 
+
+// // ====================================================
+
+// events.on('delivered', (payload=>{
+
+//     let packageStatus = {
+//         event: "delivered",
+//         time: new Date().toISOString(),
+//         payload
+//     }
+//     console.log("EVENT", packageStatus)
+//     console.log("====================== NEW ORDER ==============================")
+// })) 
+
+
