@@ -11,6 +11,7 @@
 
 - repo action -->> [repo action](https://github.com/sultan-elayan/caps/actions)
 - PR -->> [PR](https://github.com/sultan-elayan/caps/pull/1)
+- PR2 -->> [PR2](- https://github.com/sultan-elayan/caps/pull/3)
 - heroku -->> [heroku deployment](https://sultan-event-driven.herokuapp.com/)
 
 
