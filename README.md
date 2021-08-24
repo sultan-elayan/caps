@@ -14,17 +14,25 @@
 - PR2 -->> [PR2](https://github.com/sultan-elayan/caps/pull/3)
 - heroku -->> [heroku deployment](https://sultan-event-driven.herokuapp.com/)
 
+<hr>
+
 
 # MUL
+
 - ##  CAPS
 
 ![MUL](EventDrivenApplications.jpeg)
 
 - ##  socket.io
 
-![MUL](Socket.io.jpeg)
+![Socket.io](Socket.io.jpeg)
 
 
+- ##  Message-Queues
+
+![Message-Queues](Message-Queues.jpeg)
+
+<hr>
 
 # TEST
 
