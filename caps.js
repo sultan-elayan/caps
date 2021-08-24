@@ -1,23 +1,23 @@
 'use strict';
 
 require('dotenv').config()
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 const io = require('socket.io')(port);
 const caps = io.of('/caps');
-
+// require('../vendor/vendor');
+// require('../driver/driver');
 
 console.log("test ==============================");
 
 io.on('connection', (socket) => {
     console.log('CONNECTED general with id : ', socket.id);
-   
 })
 
 caps.on('connection', (socket) => {
 
     console.log('CONNECTED to caps with id : ', socket.id);
-    
-   
+
+
     socket.on('pickup', (payload => {
 
         let packageStatus = {
@@ -26,10 +26,8 @@ caps.on('connection', (socket) => {
             payload
         }
         console.log("EVENT", packageStatus)
-        socket.on ("pickup", (payload=>{
+        caps.emit("go-pickup", payload)
 
-        }))
-        
     }))
 
     socket.on('in-transit', (payload => {
@@ -43,20 +41,21 @@ caps.on('connection', (socket) => {
     }))
 
 
-    socket.on('delivered', (payload=>{
+    socket.on('delivered', (payload => {
 
         let packageStatus = {
             event: "delivered",
             time: new Date().toISOString(),
             payload
         }
+        caps.emit("go-delivered", payload)
         console.log("EVENT", packageStatus)
         console.log("====================== NEW ORDER ==============================")
-    })) 
+    }))
 
 })
 
-module.exports=caps
+module.exports = caps
 
 // ++++++++++++++++++  TCP ++++++++++++++++++++++++
 

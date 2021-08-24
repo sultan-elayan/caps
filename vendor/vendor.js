@@ -1,10 +1,8 @@
 'use strict';
 
 const io = require('socket.io-client');
-let host = 'http://localhost:8000';
 let faker = require('faker');
-const socket = io.connect(`${host}/caps`);
-
+const socket = io.connect('http://localhost:5001/caps');
 
 console.log('hello im vendor running ...............')
 
@@ -16,11 +14,12 @@ setInterval(function () {
         address: faker.address.streetAddress()
     }
     socket.emit("pickup", payload)
-
+// console.log("test vendorrrr")
+// console.log("socket.emit(pickup, payload)", socket.emit("pickup", payload))
 }, 5000);
 
 
-socket.on("delivered", (payload) => {
+socket.on("go-delivered", (payload) => {
 
     console.log("VENDOR :", "Thank you for delivering order NO.", payload.orderID)
 })

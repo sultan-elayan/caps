@@ -15,14 +15,23 @@
 - heroku -->> [heroku deployment](https://sultan-event-driven.herokuapp.com/)
 
 
-## MUL
-- ##  caps
+# MUL
+- ##  CAPS
+
 ![MUL](EventDrivenApplications.jpeg)
 
 - ##  socket.io
+
 ![MUL](Socket.io.jpeg)
 
 
 
-## TEST
+# TEST
+
+## CAPS - TCP 
+
 ![test](lab011-test.jpg)
+
+## CAPS - Socket.io 
+
+![test](lab-12-test.jpg)

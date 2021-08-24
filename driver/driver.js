@@ -1,25 +1,25 @@
 'use strict';
 
 const io = require('socket.io-client');
-let host = 'http://localhost:8000';
-const socket = io.connect(`${host}/caps`);
+const socket = io.connect('http://localhost:5001/caps');
 
 console.log('hello im driver running ...............')
 
-socket.on("pickup", (payload => {
+socket.on("go-pickup", (payload => {
 
-        setTimeout(() => {
-            console.log("DRIVER : picked up order NO.:", payload.orderID,)
-            socket.emit("in-transit", payload)
-        }, 1000);
     
-        setTimeout(() => {
-            console.log("DRIVER : delivered order NO.:", payload.orderID)
-            socket.emit("delivered", payload)
-    
-        }, 3000); 
-    }))
-    
+    setTimeout(() => {
+        console.log("DRIVER : picked up order NO.:", payload.orderID,)
+        socket.emit("in-transit", payload)
+    }, 1000);
+
+    setTimeout(() => {
+        console.log("DRIVER : delivered order NO.:", payload.orderID)
+        socket.emit("delivered", payload)
+
+    }, 3000);
+}))
+
 
 // ++++++++++++++++++  TCP ++++++++++++++++++++++++
 
@@ -39,4 +39,6 @@ socket.on("pickup", (payload => {
 
 //     }, 3000); 
 // }))
+
+
 
