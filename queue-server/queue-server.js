@@ -1,34 +1,66 @@
 'use strict';
 
-const io = require('socket.io')(8001);
+const io = require('socket.io')(5001);
+const caps = io.of('/caps');
 let faker = require('faker');
 
 let queuedMessages = {
 
-    orders : {}
+    orders: {}
 }
 
-const caps = io.of('/caps');
 
-console.log('hello im queue running ...............') 
-
+console.log('hello im queue running ...............')
 
 caps.on('connection', socket => {
 
     console.log('CONNECTED to caps with id : ', socket.id);
-    
 
-        let id = faker.datatype.uuid()
+
+    socket.on('pickup', payload => {
+        let packageStatus = {
+            event: "pickup",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+        caps.emit('pickup', payload);
+    });
+
+
+    socket.on("in-transit", (payload) => {
+        let packageStatus = {
+            event: "in-transit",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+
+    });
+
+    socket.on("delivered", (payload) => {
+
+        let packageStatus = {
+            event: "delivered",
+            time: new Date().toISOString(),
+            payload
+        }
+        console.log("EVENT", packageStatus)
+        caps.emit('delivered', payload);
+    });
+
+
+    socket.on("missed-order", (payload) => {
+        let id = faker.datatype.uuid();
+        // console.log('id==============', id)
         queuedMessages.orders[id] = payload;
+        // console.log(' queuedMessages.orders[id]==============', queuedMessages.orders)
+        socket.emit("added", payload);
 
-        socket.emit('new-order', payload); // telling the server a new order was added
-        caps.emit('order', { id: id, payload: queuedMessages.orders[id] });
-
-
-    
+    });
 
     // ==========================================================
-    socket.on('get_all', () => {
+    socket.on('getAll', () => {
 
         Object.keys(queuedMessages.orders).forEach(id => {
             socket.emit('order', { id: id, payload: queuedMessages.orders[id] })
@@ -39,14 +71,6 @@ caps.on('connection', socket => {
 
     socket.on('received', msg => {
         delete queuedMessages.orders[msg.id];
-    })
-
-    // ==========================================================
-
-    socket.on('delivered', msg => {
-
-
-        console.log("messageID:", queuedMessages.orders[msg.id])
     })
 
 
