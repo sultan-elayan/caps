@@ -43,3 +43,16 @@
 ## CAPS - Socket.io 
 
 ![test](lab-12-test.jpg)
+
+
+## QUEUE
+
+![test1](test-1.jpg)
+
+- in this status : every thing go will 
+
+![test2](test-2.jpg)
+
+- in this status : the driver stop receiving the orders so 
+queue message start to save orders and stop in pickup 
+then when the driver be on-line , all the orders come together and he received them with ID and he pickup them and delivered them

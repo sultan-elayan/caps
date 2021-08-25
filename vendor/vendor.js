@@ -7,9 +7,7 @@ const socket = io.connect('http://localhost:5001/caps');
 
 console.log('hello im vendor running ...............')
 
-
-
-setInterval(function () {
+setInterval(() => {
     let payload = {
         store: faker.company.companyName(),
         orderID: faker.datatype.uuid(),
@@ -17,26 +15,16 @@ setInterval(function () {
         address: faker.address.streetAddress()
     }
     socket.emit("pickup", payload)
-
+    socket.emit('missed-order', payload);
 }, 5000);
 
+// ============================  
 
-
-socket.on("go-delivered", (payload) => {
+socket.on("delivered", payload => {
 
     console.log("VENDOR :", "Thank you for delivering order NO.", payload.orderID)
-})
 
-// pulling msgs 
-socket.emit('get_all');
-
-socket.on('order', msg => {
-    console.log("vendor got this msg: ", msg)
-
-    socket.emit('received', msg)
-})
-
-
+});
 
 
 
